@@ -39,10 +39,7 @@ async fn process(socket: TcpStream, db: Db) {
             Get(cmd) => {
                 let db = db.lock().unwrap();
                 if let Some(value) = db.get(cmd.key()) {
-                    // `Frame::Bulk` expects data to be of type `Bytes`. This
-                    // type will be covered later in the tutorial. For now,
-                    // `&Vec<u8>` is converted to `Bytes` using `into()`.
-                    Frame::Bulk(value.clone().into())
+                    Frame::Bulk(value.clone())
                 } else {
                     Frame::Null
                 }
